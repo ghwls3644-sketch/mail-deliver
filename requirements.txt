@@ -1,0 +1,13 @@
+# 우편배달부 힐링 시뮬레이션 — 의존성 목록
+# Python 3.10 ~ 3.12 권장 (3.13은 panda3d 호환 이슈 가능성 있음)
+#
+# 설치 방법:
+#   pip install -r requirements.txt
+
+# 게임 엔진
+ursina>=5.3.0
+
+# ursina 설치 시 자동으로 같이 설치되는 주요 패키지
+# panda3d>=1.10.13
+# pillow>=9.0.0
+# numpy>=1.23.0
