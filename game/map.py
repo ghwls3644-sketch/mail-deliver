@@ -4,13 +4,15 @@ from game.npc import NPC
 class Building(Entity):
     """배달 가능한 건물 기본 클래스"""
 
-    def __init__(self, building_id, label, pos, col=color.white, scale=(1.5, 2, 1.5)):
+    def __init__(self, building_id, label, pos, col=color.white, scale=(1.5, 2, 1.5), tex=None):
         super().__init__(
             model='cube',
             position=pos,
             color=col,
             scale=scale,
-            collider='box'
+            collider='box',
+            texture=tex,
+            texture_scale=(2, 2),
         )
         self.building_id     = building_id
         self.label           = label
@@ -107,18 +109,21 @@ class Map:
         self._build_zone_a()
 
     def _build_zone_a(self):
+        BRICK = 'brick'
+        HOUSE = 'assets/textures/dirt_block.jpeg'
+
         layout = [
-            # (building_id,          label,           위치,          색상,                크기)
-            ('post_office',          '[우체국]',      (0,  0,  0),   color.yellow,        (2, 2.5, 2)),
-            ('bakery',               '[빵집]',        (4,  0,  0),   color.orange,        (1.8, 2, 1.8)),
-            ('flower_shop',          '[꽃집]',        (-4, 0,  0),   color.pink,          (1.5, 2, 1.5)),
-            ('house_flower_side',    '꽃집 옆 집',    (-4, 0,  3),   color.white,         (1.5, 2, 1.5)),
-            ('house_bakery_opp',     '빵집 맞은편',   (4,  0,  3),   color.rgb(220,220,180), (1.5, 2, 1.5)),
-            ('house_post_opp',       '우체국 맞은편', (0,  0,  3),   color.rgb(200,230,200), (1.5, 2, 1.5)),
+            # (building_id,       label,           위치,        색상,                   크기,           텍스처)
+            ('post_office',    '[우체국]',      (0,  0,  0), color.rgb(255,230,100), (2,   2.5, 2),   BRICK),
+            ('bakery',         '[빵집]',        (4,  0,  0), color.rgb(255,200,130), (1.8, 2,   1.8), BRICK),
+            ('flower_shop',    '[꽃집]',        (-4, 0,  0), color.rgb(255,190,200), (1.5, 2,   1.5), BRICK),
+            ('house_flower_side', '꽃집 옆 집', (-4, 0,  3), color.rgb(230,230,220), (1.5, 2,   1.5), HOUSE),
+            ('house_bakery_opp',  '빵집 맞은편',(4,  0,  3), color.rgb(220,210,180), (1.5, 2,   1.5), HOUSE),
+            ('house_post_opp',   '우체국 맞은편',(0,  0,  3), color.rgb(210,225,200), (1.5, 2,  1.5), HOUSE),
         ]
 
-        for bid, label, pos, col, sc in layout:
-            b = Building(bid, label, pos, col, sc)
+        for bid, label, pos, col, sc, tex in layout:
+            b = Building(bid, label, pos, col, sc, tex)
             self.buildings.append(b)
 
         # 우체통 — 집 건물 앞(z -1.5)에 배치해 건물과 좌표 겹침 방지
@@ -133,17 +138,17 @@ class Map:
 
         # 골목 파란 우체통 집 — 건물은 z=3, 우체통은 z=1.5 (중복 좌표 해소)
         b = Building('house_blue', '파란 우체통 집', (-8, 0, 3),
-                     color.rgb(200, 220, 255), (1.5, 2, 1.5))
+                     color.rgb(200, 220, 255), (1.5, 2, 1.5), HOUSE)
         self.buildings.append(b)
 
         # 공원 옆 집 (day 2 배달 대상)
         b = Building('house_park_side', '공원 옆 집', (8, 0, 3),
-                     color.rgb(180, 230, 180), (1.5, 2, 1.5))
+                     color.rgb(200, 235, 200), (1.5, 2, 1.5), HOUSE)
         self.buildings.append(b)
 
-        # 노란 지붕 집 (day 2 배달 대상) — 우체통 없음, 소포 전용
+        # 노란 지붕 집 (day 2 배달 대상)
         b = Building('house_yellow_roof', '노란 지붕 집', (0, 0, 6),
-                     color.rgb(255, 240, 150), (1.5, 2, 1.5))
+                     color.rgb(255, 240, 160), (1.5, 2, 1.5), HOUSE)
         self.buildings.append(b)
 
         # ── 주민 NPC 배치 ────────────────────────────────────────────────

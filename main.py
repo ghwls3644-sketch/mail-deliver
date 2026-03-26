@@ -21,9 +21,9 @@ window.color = color.rgb(180, 210, 255)  # 하늘색 배경
 ground = Entity(
     model='plane',
     scale=40,
-    texture='grass',
-    texture_scale=(10, 10),
-    color=color.rgb(150, 200, 120)
+    texture='assets/textures/grass_block.jpeg',
+    texture_scale=(20, 20),
+    color=color.rgb(180, 220, 150)
 )
 
 # 하루 루프 상태
