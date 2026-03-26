@@ -6,6 +6,9 @@ from game.mail import get_daily_mails
 
 app = Ursina(title='우편배달부', borderless=False)
 
+# 한글 폰트 설정 — Ursina 기본 폰트는 한글 미지원
+Text.default_font = 'assets/malgun.ttf'
+
 # 쿼터뷰 카메라
 camera.position = (10, 14, -10)
 camera.rotation = (35, -45, 0)

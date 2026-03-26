@@ -27,3 +27,6 @@ build/
 
 # 로그
 *.log
+
+# Claude Code
+.claude/launch.json

@@ -109,12 +109,12 @@ class Map:
     def _build_zone_a(self):
         layout = [
             # (building_id,          label,           위치,          색상,                크기)
-            ('post_office',          '🏤 우체국',     (0,  0,  0),   color.yellow,        (2, 2.5, 2)),
-            ('bakery',               '🥖 빵집',       (4,  0,  0),   color.orange,        (1.8, 2, 1.8)),
-            ('flower_shop',          '💐 꽃집',       (-4, 0,  0),   color.pink,          (1.5, 2, 1.5)),
-            ('house_flower_side',    '🏡 꽃집 옆 집', (-4, 0,  3),   color.white,         (1.5, 2, 1.5)),
-            ('house_bakery_opp',     '🏡 빵집 맞은편', (4, 0,  3),   color.rgb(220,220,180), (1.5, 2, 1.5)),
-            ('house_post_opp',       '🏡 우체국 맞은편', (0, 0, 3),  color.rgb(200,230,200), (1.5, 2, 1.5)),
+            ('post_office',          '[우체국]',      (0,  0,  0),   color.yellow,        (2, 2.5, 2)),
+            ('bakery',               '[빵집]',        (4,  0,  0),   color.orange,        (1.8, 2, 1.8)),
+            ('flower_shop',          '[꽃집]',        (-4, 0,  0),   color.pink,          (1.5, 2, 1.5)),
+            ('house_flower_side',    '꽃집 옆 집',    (-4, 0,  3),   color.white,         (1.5, 2, 1.5)),
+            ('house_bakery_opp',     '빵집 맞은편',   (4,  0,  3),   color.rgb(220,220,180), (1.5, 2, 1.5)),
+            ('house_post_opp',       '우체국 맞은편', (0,  0,  3),   color.rgb(200,230,200), (1.5, 2, 1.5)),
         ]
 
         for bid, label, pos, col, sc in layout:
@@ -132,17 +132,17 @@ class Map:
             self.buildings.append(Mailbox(bid, pos, col))
 
         # 골목 파란 우체통 집 — 건물은 z=3, 우체통은 z=1.5 (중복 좌표 해소)
-        b = Building('house_blue', '🏠 파란 우체통 집', (-8, 0, 3),
+        b = Building('house_blue', '파란 우체통 집', (-8, 0, 3),
                      color.rgb(200, 220, 255), (1.5, 2, 1.5))
         self.buildings.append(b)
 
         # 공원 옆 집 (day 2 배달 대상)
-        b = Building('house_park_side', '🏡 공원 옆 집', (8, 0, 3),
+        b = Building('house_park_side', '공원 옆 집', (8, 0, 3),
                      color.rgb(180, 230, 180), (1.5, 2, 1.5))
         self.buildings.append(b)
 
         # 노란 지붕 집 (day 2 배달 대상) — 우체통 없음, 소포 전용
-        b = Building('house_yellow_roof', '🏠 노란 지붕 집', (0, 0, 6),
+        b = Building('house_yellow_roof', '노란 지붕 집', (0, 0, 6),
                      color.rgb(255, 240, 150), (1.5, 2, 1.5))
         self.buildings.append(b)
 

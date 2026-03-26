@@ -15,7 +15,7 @@ class UI:
             position=(-0.62, 0.32)
         )
         self.list_title = Text(
-            '📬 오늘의 배달 목록',
+            '[ 오늘의 배달 목록 ]',
             parent=camera.ui,
             position=(-0.77, 0.42),
             scale=1.1,
@@ -52,7 +52,7 @@ class UI:
             position=(0.62, -0.22)
         )
         self.relation_title = Text(
-            '👥 주민 관계',
+            '[ 주민 관계 ]',
             parent=camera.ui,
             position=(0.49, -0.09),
             scale=1.0,
@@ -145,7 +145,7 @@ class UI:
 
         # 제목
         Text(
-            f'📖 {day_count}일차 일기',
+            f'--- {day_count}일차 일기 ---',
             parent=camera.ui,
             position=(0, 0.30),
             scale=1.8,
