@@ -92,7 +92,7 @@ class NPC(Entity):
             text,
             origin=(0, 0),
             position=(0, 0.15),
-            color=color.white,
+            color=color.black,
             background=True,
             scale=1.4
         )

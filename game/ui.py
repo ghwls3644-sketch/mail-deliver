@@ -17,7 +17,8 @@ class UI:
             model='quad',
             color=color.rgba(0, 0, 0, 160),
             scale=(0.38, 0.28),
-            position=(-0.60, 0.36)
+            position=(-0.60, 0.36),
+            z=0.1
         )
         Text('[ 오늘의 배달 ]', parent=camera.ui,
              position=(-0.75, 0.44), scale=1.1, color=color.yellow)
@@ -27,7 +28,7 @@ class UI:
         # ── 조작 안내 (하단) ─────────────────────────────────────────
         Text('WASD : 이동       E : 상호작용',
              parent=camera.ui, position=(0, -0.46),
-             scale=1.0, origin=(0, 0), color=color.rgba(255, 255, 255, 180))
+             scale=1.0, origin=(0, 0), color=color.black, background=True)
 
         # ── 튜토리얼 단계 표시 (상단 중앙) ──────────────────────────
         self.step_bg = Entity(
@@ -35,7 +36,8 @@ class UI:
             model='quad',
             color=color.rgba(0, 0, 0, 180),
             scale=(0.70, 0.08),
-            position=(0, 0.43)
+            position=(0, 0.43),
+            z=0.1
         )
         self.step_text = Text(
             '',
@@ -96,16 +98,17 @@ class UI:
         self.step_bg.enabled  = False
         self.step_text.enabled = False
 
-        panel = Entity(
+        Entity(
             parent=camera.ui,
             model='quad',
             color=color.rgba(20, 20, 40, 230),
-            scale=(0.60, 0.55)
+            scale=(0.60, 0.55),
+            z=0.1
         )
         Text('배달 완료!', parent=camera.ui,
              position=(0, 0.20), scale=2.2, origin=(0, 0), color=color.yellow)
         Text('수고했어요 :)', parent=camera.ui,
-             position=(0, 0.10), scale=1.3, origin=(0, 0), color=color.white)
+             position=(0, 0.10), scale=1.3, origin=(0, 0), color=color.rgb(200, 200, 255))
 
         for i, m in enumerate(mails):
             Text(

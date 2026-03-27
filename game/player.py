@@ -7,7 +7,7 @@ class Player(Entity):
             model='cube',
             color=color.orange,
             scale=(0.5, 1.0, 0.5),
-            position=(0, 0.5, 0),
+            position=(0, 0.5, 2),
             collider='box'
         )
         self.speed = 5
@@ -30,7 +30,7 @@ class Player(Entity):
             parent=camera.ui,
             origin=(0, 0),
             position=(0, -0.40),
-            color=color.white,
+            color=color.black,
             background=True,
             visible=False
         )
@@ -48,13 +48,21 @@ class Player(Entity):
         right = Vec3( math.cos(yaw), 0, -math.sin(yaw))
 
         move = Vec3(0, 0, 0)
-        if held_keys['w']: move += fwd - right   # 좌상단 대각선
-        if held_keys['s']: move -= fwd - right   # 우하단 대각선
-        if held_keys['a']: move -= fwd + right   # 좌하단
-        if held_keys['d']: move += fwd + right   # 우상단
+        if held_keys['w']: move += fwd - right
+        if held_keys['s']: move -= fwd - right
+        if held_keys['a']: move -= fwd + right
+        if held_keys['d']: move += fwd + right
 
         if move.length() > 0:
-            self.position += move.normalized() * self.speed * time.dt
+            step = move.normalized() * self.speed * time.dt
+            # x축 이동 후 충돌 확인 (벽 슬라이딩)
+            self.x += step.x
+            if self.intersects().hit:
+                self.x -= step.x
+            # z축 이동 후 충돌 확인 (벽 슬라이딩)
+            self.z += step.z
+            if self.intersects().hit:
+                self.z -= step.z
 
     def _check_nearby(self):
         nearest, dist = self._find_nearest()

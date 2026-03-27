@@ -13,10 +13,10 @@ Text.default_font = 'assets/malgun.ttf'
 # ── 카메라 (아이소메트릭 쿼터뷰) ────────────────────────────────────
 #   orthographic = True  : 원근 왜곡 없이 등축 투영 → 아이소메트릭 스타일
 #   rotation y = -45     : 대각선 방향으로 꺾어야 건물 두 면이 동시에 보임
-camera.position     = (-8, 14, 12)
+CAMERA_OFFSET       = Vec3(-8, 13.5, 18)
 camera.rotation     = (30, 135, 0)
 camera.orthographic = True
-camera.fov          = 18
+camera.fov          = 22
 
 # ── 배경 ──────────────────────────────────────────────────────────────
 window.color = color.rgb(180, 210, 255)
@@ -38,9 +38,10 @@ ui       = UI(mails)
 
 # ── 업데이트 ──────────────────────────────────────────────────────────
 def update():
-    ui.update(mails)
+    # 카메라가 플레이어를 따라다님
+    camera.position = player.position + CAMERA_OFFSET
 
-    # 전부 배달 완료 시 완료 화면
+    ui.update(mails)
     if all(m.delivered for m in mails):
         ui.show_complete(mails, on_restart=restart)
 
