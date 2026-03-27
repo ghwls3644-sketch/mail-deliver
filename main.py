@@ -1,74 +1,59 @@
 from ursina import *
 from game.player import Player
-from game.map import Map
-from game.ui import UI
-from game.mail import get_daily_mails
+from game.map    import Map
+from game.ui     import UI
+from game.mail   import get_tutorial_mails
 
-app = Ursina(title='우편배달부', borderless=False)
+app = Ursina(title='우편배달부', borderless=False, development_mode=False,
+             size=(1280, 720))
 
-# 한글 폰트 설정 — Ursina 기본 폰트는 한글 미지원
+# 한글 폰트
 Text.default_font = 'assets/malgun.ttf'
 
-# 쿼터뷰 카메라
-camera.position = (10, 14, -10)
-camera.rotation = (35, -45, 0)
+# ── 카메라 (아이소메트릭 쿼터뷰) ────────────────────────────────────
+#   orthographic = True  : 원근 왜곡 없이 등축 투영 → 아이소메트릭 스타일
+#   rotation y = -45     : 대각선 방향으로 꺾어야 건물 두 면이 동시에 보임
+camera.position     = (-8, 14, 12)
+camera.rotation     = (30, 135, 0)
 camera.orthographic = True
-camera.fov = 12
+camera.fov          = 18
 
-window.color = color.rgb(180, 210, 255)  # 하늘색 배경
+# ── 배경 ──────────────────────────────────────────────────────────────
+window.color = color.rgb(180, 210, 255)
 
-# 바닥
 ground = Entity(
     model='plane',
-    scale=40,
+    scale=60,
     texture='assets/textures/grass_block.jpeg',
-    texture_scale=(20, 20),
+    texture_scale=(30, 30),
     color=color.rgb(180, 220, 150)
 )
 
-# 하루 루프 상태
-class GameState:
-    DAY   = 'day'
-    NIGHT = 'night'
+# ── 게임 오브젝트 초기화 ─────────────────────────────────────────────
+mails    = get_tutorial_mails()
+game_map = Map()
+player   = Player(mails, interactables=game_map.interactables)
+ui       = UI(mails)
 
-game = GameState()
-game.state     = GameState.DAY
-game.day_count = 1
-game.time      = 0.0    # 0.0 = 오전 9시, 1.0 = 오후 6시 (하루 끝)
-game.speed     = 0.01   # 시간 흐름 속도 (숫자 키울수록 빠름)
 
-mails      = get_daily_mails()
-game_map   = Map()
-player     = Player(mails)
-ui         = UI(mails, game, game_map.npcs)
-
+# ── 업데이트 ──────────────────────────────────────────────────────────
 def update():
-    if game.state == GameState.DAY:
-        game.time += time.dt * game.speed
-        ui.update_clock(game.time)
+    ui.update(mails)
 
-        if game.time >= 1.0:
-            end_day()
+    # 전부 배달 완료 시 완료 화면
+    if all(m.delivered for m in mails):
+        ui.show_complete(mails, on_restart=restart)
 
-def end_day():
-    game.state = GameState.NIGHT
-    ui.show_diary(game.day_count, mails)
 
-def next_day():
-    game.state     = GameState.DAY
-    game.day_count += 1
-    game.time      = 0.0
+def restart():
+    import importlib, game.mail as gm
+    importlib.reload(gm)
+    scene.clear()
+    application.base.graphicsEngine.renderFrame()
+    python_object = application
+    # 간단히 앱 재시작
+    import os, sys
+    os.execv(sys.executable, [sys.executable] + sys.argv)
 
-    # 못 다 한 배달은 다음 날로 이월
-    leftover = [m for m in mails if not m.delivered]
-    new_mails = get_daily_mails(day=game.day_count)
-    mails.clear()
-    mails.extend(leftover + new_mails)
-
-    ui.refresh(mails)
-    player.mails = mails
-
-# 일기 화면에서 '다음 날' 버튼이 호출
-game.next_day = next_day
 
 app.run()
