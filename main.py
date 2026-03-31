@@ -23,9 +23,9 @@ window.color = color.rgb(180, 210, 255)
 
 ground = Entity(
     model='plane',
-    scale=60,
+    scale=80,
     texture='assets/textures/grass_block.jpeg',
-    texture_scale=(30, 30),
+    texture_scale=(40, 40),
     color=color.rgb(180, 220, 150)
 )
 
@@ -47,12 +47,6 @@ def update():
 
 
 def restart():
-    import importlib, game.mail as gm
-    importlib.reload(gm)
-    scene.clear()
-    application.base.graphicsEngine.renderFrame()
-    python_object = application
-    # 간단히 앱 재시작
     import os, sys
     os.execv(sys.executable, [sys.executable] + sys.argv)
 

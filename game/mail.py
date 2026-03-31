@@ -35,7 +35,7 @@ class Mail:
 
 def get_tutorial_mails():
     return [
-        Mail('letter',  '김할머니',  '빨간 우체통',  'house_kim'),
-        Mail('parcel',  '박씨 가족', '파란 우체통 집', 'house_park'),
-        Mail('express', '이청년',    '노란 우체통 집', 'house_lee'),
+        Mail('letter',  '김할머니',  '빨간 우체통',    'B_KIM'),
+        Mail('parcel',  '박씨 가족', '파란 우체통 집',  'B_PARK'),
+        Mail('express', '이청년',    '노란 우체통 집',  'B_LEE'),
     ]

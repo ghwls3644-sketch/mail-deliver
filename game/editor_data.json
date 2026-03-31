@@ -1,0 +1,49 @@
+{
+  "objects": [
+    {
+      "name": "straight",
+      "model": "assets/kenney_city-kit-roads/Models/GLB format/road-straight.glb",
+      "pos": [
+        -3.0,
+        0,
+        3.0
+      ],
+      "scale": [
+        2,
+        2,
+        2
+      ],
+      "rot_y": 0
+    },
+    {
+      "name": "straight",
+      "model": "assets/kenney_city-kit-roads/Models/GLB format/road-straight.glb",
+      "pos": [
+        -1.0,
+        0,
+        3.0
+      ],
+      "scale": [
+        2,
+        2,
+        2
+      ],
+      "rot_y": 0
+    },
+    {
+      "name": "crossroad",
+      "model": "assets/kenney_city-kit-roads/Models/GLB format/road-crossroad.glb",
+      "pos": [
+        1.0,
+        0,
+        3.0
+      ],
+      "scale": [
+        2,
+        2,
+        2
+      ],
+      "rot_y": 0
+    }
+  ]
+}
