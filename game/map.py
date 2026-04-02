@@ -119,12 +119,15 @@ class Mailbox(Entity):
 
 # ── Map ────────────────────────────────────────────────────────────────
 
+MAPS_DIR = 'game/maps/'
+
 class Map:
     """튜토리얼 맵 — 구역 A (마을 광장) + 구역 B (주택가 골목)
     좌표 기준: 맵_배치_계획서.md 참고
     """
 
-    def __init__(self):
+    def __init__(self, map_name='tutorial'):
+        self._map_name     = map_name   # 에디터 저장 파일명 (확장자 제외)
         self.buildings     = []
         self.mailboxes     = []
         self.npcs          = []
@@ -160,9 +163,9 @@ class Map:
         self.interactables = self.buildings + self.mailboxes + self.npcs
 
     def _load_editor_objects(self):
-        """editor.py 로 저장한 game/editor_data.json 을 읽어 장식 오브젝트 생성.
-        파일이 없으면 조용히 건너뜀 — 게임 로직에 영향 없음."""
-        path = 'game/editor_data.json'
+        """에디터(editor.py)로 저장한 game/maps/{map_name}.json 을 읽어 장식 오브젝트 생성.
+        파일이 없으면 조용히 건너뜀 — 게임 로직(배달·NPC)에 영향 없음."""
+        path = MAPS_DIR + self._map_name + '.json'
         if not os.path.exists(path):
             return
         with open(path, encoding='utf-8') as f:

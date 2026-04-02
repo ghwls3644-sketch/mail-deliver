@@ -16,6 +16,11 @@ pip install -r requirements.txt
 python main.py
 ```
 
+**맵 에디터 실행** (게임과 독립)
+```bash
+python editor.py
+```
+
 ---
 
 ## 조작법
@@ -41,10 +46,12 @@ python main.py
 ```
 mail deliver/
 ├── main.py          # 진입점 — 게임 루프, 카메라
+├── editor.py        # 독립 맵 에디터
 ├── requirements.txt
 ├── game/
 │   ├── mail.py      # 우편물 데이터
 │   ├── map.py       # 맵 레이아웃
+│   ├── maps/        # 에디터 저장 맵 (JSON)
 │   ├── npc.py       # 주민 NPC
 │   ├── player.py    # 플레이어 이동
 │   └── ui.py        # HUD
@@ -57,4 +64,7 @@ mail deliver/
 
 - [Kenney City Kit (Suburban)](https://kenney.nl) — CC0
 - [Kenney City Kit (Roads)](https://kenney.nl) — CC0
+- [Kenney City Kit (Commercial)](https://kenney.nl) — CC0
+- [Kenney Nature Kit](https://kenney.nl) — CC0
+- [Kenney Car Kit](https://kenney.nl) — CC0
 - [Kenney Mini Characters](https://kenney.nl) — CC0
