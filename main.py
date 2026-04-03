@@ -1,4 +1,5 @@
 from ursina import *
+from game.title  import TitleScreen
 from game.player import Player
 from game.map    import Map
 from game.ui     import UI
@@ -11,8 +12,6 @@ app = Ursina(title='우편배달부', borderless=False, development_mode=False,
 Text.default_font = 'assets/malgun.ttf'
 
 # ── 카메라 (아이소메트릭 쿼터뷰) ────────────────────────────────────
-#   orthographic = True  : 원근 왜곡 없이 등축 투영 → 아이소메트릭 스타일
-#   rotation y = -45     : 대각선 방향으로 꺾어야 건물 두 면이 동시에 보임
 CAMERA_OFFSET       = Vec3(-8, 13.5, 18)
 camera.rotation     = (30, 135, 0)
 camera.orthographic = True
@@ -29,16 +28,33 @@ ground = Entity(
     color=color.rgb(180, 220, 150)
 )
 
-# ── 게임 오브젝트 초기화 ─────────────────────────────────────────────
-mails    = get_tutorial_mails()
-game_map = Map()
-player   = Player(mails, interactables=game_map.interactables)
-ui       = UI(mails)
+# ── 게임 상태 ─────────────────────────────────────────────────────────
+game_started = False
+mails    = None
+game_map = None
+player   = None
+ui       = None
+
+
+def start_game():
+    """타이틀에서 '시작하기' 클릭 시 호출"""
+    global game_started, mails, game_map, player, ui
+    mails    = get_tutorial_mails()
+    game_map = Map()
+    player   = Player(mails, interactables=game_map.interactables)
+    ui       = UI(mails)
+    game_started = True
+
+
+# ── 타이틀 화면 표시 ──────────────────────────────────────────────────
+title_screen = TitleScreen(on_start=start_game)
 
 
 # ── 업데이트 ──────────────────────────────────────────────────────────
 def update():
-    # 카메라가 플레이어를 따라다님
+    if not game_started:
+        return
+
     camera.position = player.position + CAMERA_OFFSET
 
     ui.update(mails)
